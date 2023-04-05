@@ -67,10 +67,10 @@ router.get('/dbwrite', async (req, res) => {
 });*/
 
 
-//module.exports = app;
+module.exports = app;
 //module.exports.handler = serverless(app);
 
-
+/*
 const port = 8085;
 app.listen(port, () => console.log(`Listening at ${port}`));
-botMod.launch();
+botMod.launch();*/
