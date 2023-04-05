@@ -1,0 +1,21 @@
+module.exports = {
+    "welcome": "Hello there! Welcome to Meme menace!!\n\nPlease use my keyboard below to see what i can do.",
+    "responseTime": "Response time: %sms",
+    "viewing": "Showing memes...",
+    "stopView": "Stopped viewing memes.",
+    "appreciation": "Thanks for your apprciation ",
+    "lastMeme": "Sorry! That's all for now.",
+    "messageError": "Message does not exist.",
+    "next": "Next meme...",
+    "prev": "Previous meme...",
+    "denyMemeAdd": "Your are not authorised to add memes.",
+    "editWelcome": "You can either add or delete a meme with the buttons below.",
+    "mainM": "📔 Main menu",
+    "linkIn": "Enter the link to a meme to add:\n\nMust begin with https://...",
+    "descIn": "Great! Now enter a description for this cool meme.",
+    "invalidLinkIn": "❌ Invalid link!\n\nLink must begin with https://...",
+    "memeadd": "✅ Meme added!",
+    "ADMIN": "adminData.json",
+    "USER": "userData.json",
+    "MEMES": "memeData.json"
+};

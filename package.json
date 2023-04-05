@@ -1,0 +1,19 @@
+{
+  "name": "first_micro_test",
+  "version": "1.0.0",
+  "description": "testing TG bot dev through nodeJS and deta",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "crypticobi1",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongodb": "^5.1.0",
+    "serverless-http": "^3.1.1",
+    "telegraf": "^4.11.2"
+  }
+}
