@@ -1,10 +1,11 @@
 {
-  "name": "first_micro_test",
+  "name": "mongo-express",
   "version": "1.0.0",
-  "description": "testing TG bot dev through nodeJS and deta",
+  "description": "testing TG bot dev through nodeJS and railway.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "crypticobi1",

@@ -10,7 +10,7 @@ app.use('/random', router);
 //const serverless = require('serverless-http');
 
 
-const bot_Import = require('./to_frontend/telegrafAPI');
+//const bot_Import = require('./to_frontend/telegrafAPI');
 const botMod = bot_Import.bot;
 const bToken = bot_Import.botToken;
 const _url = bot_Import.hookUrl;
