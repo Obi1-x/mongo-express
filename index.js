@@ -11,9 +11,9 @@ const _url = bot_Import.hookUrl;
 
 const repo = bot_Import.kBoards.daBase;
 
-//botMod.telegram.setWebhook(_url + bToken); // Run this once to connect the webhook.
-//router.use(botMod.webhookCallback("/" + bToken));
-//botMod.startWebhook("/" + bToken, null, null); //To start the webhook.
+botMod.telegram.setWebhook(_url + bToken); // Run this once to connect the webhook.
+app.use(botMod.webhookCallback("/" + bToken));
+botMod.startWebhook("/" + bToken, null, null); //To start the webhook.
 
 
 app.get('/', async (req, res) => {
@@ -60,22 +60,12 @@ router.get('/dbwrite', async (req, res) => {
     res.send(`Write complete`);
 });*/
 
-
-//module.exports = app;
-//module.exports.handler = serverless(app);
-
-
 const port = process.env.PORT || 5050;
-const startServer = async() => {
-    console.log("Fetching server");
-    const listening = await app.listen(port, (serv) => {
-        console.log(`Listening at ${port}`);
-        console.log("Bot polling removed", serv);
-        botMod.launch();
+
+const startServer = () => {
+    console.log("Start server...");
+    app.listen(port, () => {
+        console.log(`Server started!\nListening at ${port}.`);
     });
-    console.log(listening.address());
 }
-
 startServer();
-
-//botMod.launch();

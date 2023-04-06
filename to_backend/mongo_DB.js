@@ -10,7 +10,7 @@ var connectionInstance, menaceDB;
 const dbConnect = () => {
     console.log("Connecting to MongoDB Atlas cluster...");
     client.connect().then((connected) => {
-        connectionInstance = connected.close();
+        connectionInstance = connected;
         menaceDB = connected.db("menace_db");  //REMEMBER TO SAVE DB AND COLLECTIONS NAMES IN THE .ENV FILE
         
         //menaceDB.collection("users").find()
