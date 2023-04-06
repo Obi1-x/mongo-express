@@ -65,7 +65,7 @@ router.get('/dbwrite', async (req, res) => {
 //module.exports.handler = serverless(app);
 
 
-const port = 8085;
+const port = process.env.PORT || 5050;
 const startServer = async() => {
     console.log("Fetching server");
     const listening = await app.listen(port, (serv) => {
