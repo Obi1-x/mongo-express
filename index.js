@@ -11,11 +11,7 @@ const _url = bot_Import.hookUrl;
 
 const repo = bot_Import.kBoards.daBase;
 
-botMod.telegram.setWebhook(_url + bToken); // Run this once to connect the webhook.
-app.use(botMod.webhookCallback("/" + bToken));
-botMod.startWebhook("/" + bToken, null, null); //To start the webhook.
-
-
+//Endpoints......................
 app.get('/', async (req, res) => {
     console.log("Welcome to the main endpoint!");
     res.status(200).send("Hello World, Welcome to my Lambda function endpoint.");
@@ -60,12 +56,22 @@ router.get('/dbwrite', async (req, res) => {
     res.send(`Write complete`);
 });*/
 
+
+
+
+
 const port = process.env.PORT || 5050;
 
 const startServer = () => {
-    console.log("Start server...");
+    console.log("Starting server...");
     app.listen(port, () => {
         console.log(`Server started!\nListening at ${port}.`);
+        const hookString = _url + bToken; console.log(hookString);
+
+        app.use(botMod.webhookCallback("/" + bToken));
+        botMod.telegram.setWebhook(hookString); // Run this once to connect the webhook.
+        botMod.startWebhook("/" + bToken, null, null); //To start the webhook.
     });
 }
+
 startServer();
