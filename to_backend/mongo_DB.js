@@ -35,18 +35,21 @@ const dbConnect = () => {
 //========================================DB QUERIES.
 const getAdmin = async (adminId) => {
     logBox["lastLog"] = `Get admin ${adminId} on ${new Date().getTime()}`;
-    console.log("Getting admin: ", adminId);
-    return menaceDB.collection("users").findOne({ ID: adminId }); //change to admin.
+    console.log("Getting admin:", adminId);
+    return menaceDB.collection("admins").findOne({ ID: adminId }); //change to admin.
 }
 
-const setAdmin = (adminId, admin) => {}
+const setAdmin = (admin) => {
+    logBox["lastLog"] = `Set admin ${admin.ID} on ${new Date().getTime()}`;
+    return menaceDB.collection("admins").insertOne(admin);
+}
 
 
 
 
 const getUser = async (userId) => {
     logBox["lastLog"] = `Get user ${userId} on ${new Date().getTime()}`;
-    console.log("Getting user: ", userId);
+    console.log("Getting user:", userId);
     return menaceDB.collection("users").findOne({ ID: userId });
 }
 

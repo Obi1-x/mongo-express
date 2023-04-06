@@ -18,12 +18,6 @@ const bot = new Telegraf(botToken);
 
 const stage = new Scenes.Stage([memeScene, memeAddScene, settingsScene]); // Register our scenes
 
-var dbWriteCountdown; //Write to DB 5 seconds after being idle. Might change.
-const updateDbFile = () => {
-    kBoards.daBase.write_cmd();
-    clearInterval(dbWriteCountdown);
-}
-
 bot.use(async (ctx, next) => {
     const start = new Date();
     await next();
@@ -37,15 +31,16 @@ bot.use(stage.middleware()); // Stage middleware
 
 
 bot.start((ctx) => {
-    //kBoards.daBase.isAdmin(ctx.message.chat.id).then((anAdmin) => {
-      /*  if (anAdmin.val()) { //Is an Admin.
+    kBoards.daBase.isAdmin(ctx.message.chat.id).then((anAdmin) => {
+        if (anAdmin) { //Is an Admin.
             ctx.reply(_texts.welcome, kBoards.startBoardAdmin);
-            console.log("Gotten admin: " + anAdmin.val());
-            kBoards.daBase.dbLogs["Snapshot"] = anAdmin.val();
-        } else if (!anAdmin.val()) ctx.reply(_texts.welcome, kBoards.startBoard);
-        */ctx.reply(_texts.mainM);
-        //kBoards.daBase.verifyUser(ctx.message.chat);
-    //}).catch((err) => console.log(err))
+            console.log("Gotten admin: " + anAdmin);
+            kBoards.daBase.dbLogs["Snapshot"] = anAdmin;
+        } else if (!anAdmin) ctx.reply(_texts.welcome, kBoards.startBoard);
+
+        ctx.reply(_texts.mainM);
+        kBoards.daBase.verifyUser(ctx.message.chat);
+    }).catch((err) => console.log(err))
 });
 
 //Method for requesting user's location
@@ -54,7 +49,7 @@ bot.command("appreciate", (ctx) => {
     //kBoards.daBase.pushMeme(1355311995, "https://twitter.com/Jeyjeffrey1/status/1566504571157053448?s=20", "The excuse of traffic never gets old.");
     console.log("Appreciate db write");
 
-    //kBoards.daBase.assignAdmin(ctx.message.chat.id, true);
+    kBoards.daBase.assignAdmin(ctx.message.chat.id, true);
 });
 
 bot.catch((err, ctx) => {

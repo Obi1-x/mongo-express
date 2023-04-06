@@ -14,9 +14,10 @@ class UserInfo{
  }
 
  class AdminInfo{
-    constructor(creator) {
+    constructor(creator, id) {
         this.dateAssigned = new Date().getTime();
         this.isCreator = creator;
+        this.ID = id;
     }
  }
 
@@ -34,6 +35,7 @@ class UserInfo{
 //=================================== DB QUERIES
 const registerUser = (aUser) => {
     const newUser = new UserInfo(aUser.username, aUser.first_name, aUser.id);
+
     //Main registration
     mongoDB.setUser(newUser).then((result) => {
         console.log("Object inserted ID:", result.insertedId);
@@ -61,7 +63,6 @@ const verifyUser = async (aUser) => {
             console.log("User data already exists");
             dbLogs["User data"] = unknownUser;
             console.log("User info: ", unknownUser);
-            return "Verified";
         }
         else if (!unknownUser) {
             dbLogs["User data"] = "User not detected.";
@@ -77,16 +78,16 @@ const verifyUser = async (aUser) => {
 
 
 const assignAdmin = async (adminId, isCreator) => { //Set this manually or get admin data from telegraf API if avaialable.
-    mongoDB.setAdmin(String(adminId), new AdminInfo(isCreator)).then((err) => {
-        if (err) {
-            dbLogs["Assigned admin"] = "This error occured: " + err;
-            console.log("An error occurred.");
-        }
-        else if(!err){
+    mongoDB.setAdmin(new AdminInfo(isCreator, adminId)).then((result) => {
+        console.log("Object inserted ID:", result.insertedId);
+        if (result) {
             dbLogs["Assigned admin"] = "Admin added.";
             console.log("Admin added.");
         }
-        return err;
+        else if(!result){
+            dbLogs["Assigned admin"] = "This error occured: " + err;
+            console.log("An error occurred.");
+        }
     }).catch((error) => {
         dbLogs["Assign admin"] = "This error occured: " + error;
         console.log("This error occured: ", error);
@@ -96,9 +97,8 @@ const assignAdmin = async (adminId, isCreator) => { //Set this manually or get a
 
 const isAdmin = async (adminId) => {
     //Verification from DB.
-    console.log("Looking for admin");
-    const checking = await mongoDB.getAdmin(adminId);
-    return checking.once('value');
+    console.log("Looking for admin...");
+    return await mongoDB.getAdmin(adminId);
 }
 
 
@@ -130,98 +130,6 @@ const disconnectDB = () => {
     return mongoDB.closeConnection();
 }
 
-/*
-const testRetrieve = async () => {
-    var aUser = {
-        "id": 1355311995,
-        "first_name": "Phenomenal",
-        "username": "eizeko",
-        "type": "private"
-    }
-
-    const unknownUser = await fbDB.getUser(aUser.id);
-    unknownUser.once('value').then(async (snapshot) => {
-        if (snapshot.val()) {
-            console.log("User exists");
-            dbLogs["Snapshot"] = snapshot.val();
-            console.log("User info: ", snapshot.val());
-            //fbDB.freeResources();
-            return snapshot.val();
-        } else if (!snapshot.val()) {
-            dbLogs["Snapshot"] = "User not detected.";
-            console.log("User info: ", snapshot.val());
-            //fbDB.freeResources();
-            return "Nothing found";
-        }
-    }).catch((error) => {
-        dbLogs["Verify user"] = "This error occured: " + error;
-        console.log("This error occured: ", error);
-    });
-}
-
-const testSend = () => {
-    var theOwner = {
-        "id": 1355311995,
-        "first_name": "Phenomenal",
-        "username": "eizeko",
-        "type": "private"
-    }
-    
-    var firstAdmin = {
-        "id": 1770541911,
-        "first_name": 'Mean',
-        "username": 'Chime22',
-        "type": 'private'
-    }
-
-    registerUser(theOwner);
-}
-
-const testGetAdmin = async () => {
-    var theOwner = {
-        "id": 1355311995,
-        "first_name": "Phenomenal",
-        "username": "eizeko",
-        "type": "private"
-    }
-    
-    var firstAdmin = {
-        "id": 1770541911,
-        "first_name": 'Mean',
-        "username": 'Chime22',
-        "type": 'private'
-    }
-
-    isAdmin(theOwner.id).then((anAdmin) => {
-        if (anAdmin.val()) { //Is an Admin.
-            console.log("Gotten admin: " + anAdmin.val());
-            dbLogs["Snapshot"] = anAdmin.val();
-            return anAdmin.val();
-        } else if (!anAdmin.val()) {
-            console.log("Gotten admin: ", "Nothing returned");
-            return "Admin not found";
-        }
-    }).catch((err) => console.log(err))
-}
-
-
-const testSetAdmin = async () => {
-    var theOwner = {
-        "id": 1355311995,
-        "first_name": "Phenomenal",
-        "username": "eizeko",
-        "type": "private"
-    }
-    
-    var firstAdmin = {
-        "id": 1770541911,
-        "first_name": 'Mean',
-        "username": 'Chime22',
-        "type": 'private'
-    }
-
-    return assignAdmin(theOwner.id, true);
-}*/
 //=======================================================DB QUERIES END.
 
 

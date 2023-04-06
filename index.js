@@ -24,6 +24,7 @@ app.get('/logs', async (req, res) => {
 
 
 
+/*
 app.get('/dbread', async (req, res) => {
     var aUser = {
         "id": 1355312020,
@@ -37,7 +38,7 @@ app.get('/dbread', async (req, res) => {
         res.status(200).send(`User verified ${T}`);
     });
     //res.send(`Read complete wrote`);
-});
+});*/
 
 app.get('/dbconnect', async (req, res) => {
     console.log("DB endpoint!", "Connecting to DB...");
@@ -66,11 +67,18 @@ const startServer = () => {
     console.log("Starting server...");
     app.listen(port, () => {
         console.log(`Server started!\nListening at ${port}.`);
-        const hookString = _url + bToken; console.log(hookString);
 
+        //Setting web hook.
+        const hookString = _url + bToken; console.log(hookString);
         app.use(botMod.webhookCallback("/" + bToken));
         botMod.telegram.setWebhook(hookString); // Run this once to connect the webhook.
         botMod.startWebhook("/" + bToken, null, null); //To start the webhook.
+
+        //or Poll to test
+        //botMod.launch();
+
+        //Connecting to MongpDB.
+        repo.connectDB();
     });
 }
 
