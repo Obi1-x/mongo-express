@@ -43,8 +43,8 @@ bot.start((ctx) => {
             console.log("Gotten admin: " + anAdmin.val());
             kBoards.daBase.dbLogs["Snapshot"] = anAdmin.val();
         } else if (!anAdmin.val()) ctx.reply(_texts.welcome, kBoards.startBoard);
-        ctx.reply(_texts.mainM);*/
-        kBoards.daBase.verifyUser(ctx.message.chat);
+        */ctx.reply(_texts.mainM);
+        //kBoards.daBase.verifyUser(ctx.message.chat);
     //}).catch((err) => console.log(err))
 });
 
@@ -54,7 +54,7 @@ bot.command("appreciate", (ctx) => {
     //kBoards.daBase.pushMeme(1355311995, "https://twitter.com/Jeyjeffrey1/status/1566504571157053448?s=20", "The excuse of traffic never gets old.");
     console.log("Appreciate db write");
 
-    kBoards.daBase.assignAdmin(ctx.message.chat.id, true);
+    //kBoards.daBase.assignAdmin(ctx.message.chat.id, true);
 });
 
 bot.catch((err, ctx) => {

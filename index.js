@@ -66,5 +66,16 @@ router.get('/dbwrite', async (req, res) => {
 
 
 const port = 8085;
-app.listen(port, () => console.log(`Listening at ${port}`));
-botMod.launch();
+const startServer = async() => {
+    console.log("Fetching server");
+    const listening = await app.listen(port, (serv) => {
+        console.log(`Listening at ${port}`);
+        console.log("Bot polling removed", serv);
+        botMod.launch();
+    });
+    console.log(listening.address());
+}
+
+startServer();
+
+//botMod.launch();
