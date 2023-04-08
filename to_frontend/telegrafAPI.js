@@ -31,7 +31,7 @@ bot.use(stage.middleware()); // Stage middleware
 
 
 bot.start((ctx) => {
-    kBoards.daBase.isAdmin(1770541911).then((anAdmin) => {
+    kBoards.daBase.isAdmin(ctx.message.chat.id).then((anAdmin) => {
         if (anAdmin) { //Is an Admin.
             ctx.reply(_texts.welcome, kBoards.startBoardAdmin);
             console.log("Gotten admin: " + anAdmin);
