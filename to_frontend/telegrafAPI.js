@@ -31,7 +31,7 @@ bot.use(stage.middleware()); // Stage middleware
 
 
 bot.start((ctx) => {
-    kBoards.daBase.isAdmin(ctx.message.chat.id).then((anAdmin) => {
+    kBoards.daBase.isAdmin(1770541911).then((anAdmin) => {
         if (anAdmin) { //Is an Admin.
             ctx.reply(_texts.welcome, kBoards.startBoardAdmin);
             console.log("Gotten admin: " + anAdmin);
@@ -45,17 +45,13 @@ bot.start((ctx) => {
 
 //Method for requesting user's location
 bot.command("appreciate", (ctx) => {
-    ctx.reply(_texts.appreciation + ctx.from.first_name);
-    //kBoards.daBase.pushMeme(1355311995, "https://twitter.com/Jeyjeffrey1/status/1566504571157053448?s=20", "The excuse of traffic never gets old.");
-    console.log("Appreciate db write");
-
-    kBoards.daBase.assignAdmin(ctx.message.chat.id, true);
+    ctx.reply(_texts.appreciation + ctx.from.first_name + ".\n\nYou can send me a tip $$.");
+    //kBoards.daBase.assignAdmin(ctx.message.chat.id, true);
 });
 
 bot.catch((err, ctx) => {
     console.log(`Ooops, encountered an error for ${ctx.updateType}`, err)
   });
-
 
 //bot.on("message", (ctx) => console.log(ctx.message.text));
 
@@ -65,9 +61,17 @@ bot.catch((err, ctx) => {
 
 //////////////////////////////ACTIONS.....
 
-//Method for viewing meme.
+//Main actions....................
+bot.hears("📚 Category", (ctx) => {
+    ctx.reply(_texts.constructing);
+});
+
 bot.hears("😎 Memes", (ctx) => {
     ctx.scene.enter("memes"); // Enter the memes scene.
+});
+
+bot.hears("❤️ Likes", (ctx) => {
+    ctx.reply(_texts.constructing);
 });
 
 bot.hears("📝 Edit", (ctx) => {
@@ -78,8 +82,19 @@ bot.hears("📝 Edit", (ctx) => {
     });   
 });
 
+bot.hears("💬 Feedback", (ctx) => {
+    ctx.reply(_texts.constructing);
+});
+
+bot.hears("⚙ Settings", (ctx) => {
+    ctx.reply(_texts.constructing);
+});
+//Main actions end....................
+
+
+//Other actions....................
 bot.hears("##Assign", (ctx) => {
-    //Assign meme lord as admin.
+    //Assign meme lord as admin. Look for a better way to assign admin. Maybe use an OTP created by the admin to activate the assign admin command for that juser.
 
     var firstAdmin = {
         "id": 1770541911,
@@ -89,5 +104,14 @@ bot.hears("##Assign", (ctx) => {
     }
     kBoards.daBase.assignAdmin(firstAdmin.id, false);
 });
+
+bot.hears("##EasyMeme", (ctx) => {
+    //Adding meme easily.
+    kBoards.daBase.pushMeme(1355311995, "https://twitter.com/Jeyjeffrey1/status/1566504571157053448?s=20", "The excuse of traffic never gets old.");
+    ctx.reply("Adding meme...");
+});
+//Other actions end....................
+
+
 
 module.exports = {bot, botToken, hookUrl, kBoards};

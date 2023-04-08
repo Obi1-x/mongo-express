@@ -69,7 +69,7 @@ const startServer = () => {
         console.log(`Server started!\nListening at ${port}.`);
 
         //Setting web hook.
-        const hookString = _url + bToken; console.log(hookString);
+        const hookString = _url + bToken;
         app.use(botMod.webhookCallback("/" + bToken));
         botMod.telegram.setWebhook(hookString); // Run this once to connect the webhook.
         botMod.startWebhook("/" + bToken, null, null); //To start the webhook.

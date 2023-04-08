@@ -4,7 +4,7 @@ const Markup = require('telegraf').Markup;
 
 //Make keyboard collapsible.
 
-const startBoard = Markup.keyboard([ ["📚 Category", "😎 Memes", "❤️ Likes"], ["⚙ Settings", "💬 Feedback"] ]).resize()
+const startBoard = Markup.keyboard([ ["📚 Category", "😎 Memes", "❤️ Likes"], ["💬 Feedback", "⚙ Settings"] ]).resize()
 
 const startBoardAdmin = Markup.keyboard([ ["📚 Category", "😎 Memes", "❤️ Likes"], ["📝 Edit", "💬 Feedback", "⚙ Settings" ] ]).resize()
 

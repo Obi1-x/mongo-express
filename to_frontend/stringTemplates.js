@@ -17,5 +17,6 @@ module.exports = {
     "memeadd": "✅ Meme added!",
     "ADMIN": "adminData.json",
     "USER": "userData.json",
-    "MEMES": "memeData.json"
+    "MEMES": "memeData.json",
+    "constructing": "🚧 Under construction. 🏗 🚧\nCheck back later."
 };

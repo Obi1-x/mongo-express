@@ -13,12 +13,25 @@ const dbConnect = () => {
         connectionInstance = connected;
         menaceDB = connected.db("menace_db");  //REMEMBER TO SAVE DB AND COLLECTIONS NAMES IN THE .ENV FILE
         
-        //menaceDB.collection("users").find()
+        //menaceDB.collection("users").countDocuments().then((f) => console.log("Number of documents:", f));
         console.log("Database connected!");
         logBox["dbConnect"] = `DB connected on ${new Date().getTime()}`;
     }).catch((error) => console.log("This error occured while trying to connect to DB:", error));
 }
-//dbConnect();
+
+const establishConnection = () => {
+    var message;
+    if(menaceDB) message = "DB connected";
+    else if(!menaceDB) {
+        dbConnect();
+        message = "Connecting DB";
+    }
+    return message
+}
+
+
+
+
 
 
 
@@ -61,25 +74,24 @@ const setUser = async (user) => {
 
 
 
-const getMeme = async (memeIndex) => {}
-
-const setMeme = async (aMeme) => {}
-
-
-const memePoolSize = async() => {}
-
-
-
-
-const establishConnection = () => {
-    var message;
-    if(menaceDB) message = "DB connected";
-    else if(!menaceDB) {
-        dbConnect();
-        message = "Connecting DB";
-    }
-    return message
+const getMeme = async (memeIndex) => {
+    logBox["lastLog"] = `Get meme ${memeIndex} on ${new Date().getTime()}`;
+    console.log("Getting meme:", memeIndex);
+    return menaceDB.collection("memes").findOne({ countId: memeIndex });
 }
+
+const setMeme = async (aMeme) => {
+    logBox["lastLog"] = `Set meme ${aMeme.addedBy} on ${new Date().getTime()}`;
+    return menaceDB.collection("memes").insertOne(aMeme);
+}
+
+
+const memePoolSize = async() => {
+    return menaceDB.collection("memes").countDocuments();
+}
+
+
+
 
 const closeConnection = () => {
     var message;

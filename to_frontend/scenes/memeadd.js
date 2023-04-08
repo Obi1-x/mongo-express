@@ -1,7 +1,7 @@
 //MEME ADD SCENE
 
 const { Scenes, session } = require("telegraf");
-const boards = require("../boardsNbuttons");  //require('../../to_backend/dummyBase');
+const boards = require("../boardsNbuttons");
 const _texts = require("../stringTemplates");
 
 const Scene = Scenes.BaseScene;
@@ -64,11 +64,19 @@ addMeme.hears("🗑 Delete meme", (ctx) => {
 });
 
 addMeme.leave(async (ctx) => {
-  await ctx.reply(_texts.mainM, boards.userControl(ctx.message.chat.id));
-  console.log(ctx.session);
-  delete ctx.session; // = undefined; //Clear session
+    boards.daBase.isAdmin(ctx.message.chat.id).then((anAdmin) => {
+        ctx.reply(_texts.stopView);
+        //viewingMemes = false;
+        //delete ctx.session.index; // Delete session field
+        //delete ctx.session.movies; // Delete session field
 
-  await ctx.scene.leave();
+        if (anAdmin) ctx.reply(_texts.mainM, boards.startBoardAdmin);
+        else if (!anAdmin) ctx.reply(_texts.mainM, boards.startBoard);
+
+        console.log(ctx.session);
+        delete ctx.session; // = undefined; //Clear session
+        ctx.scene.leave();
+    }).catch((err) => console.log("This error occured while swtich back to main scene.", err));
 });
 
 addMeme.hears("🔙 Back", leave());

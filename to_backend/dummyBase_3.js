@@ -24,6 +24,7 @@ class UserInfo{
  class Meme{
     constructor(_creator, src, desc){
         this.timeAdded = new Date().getTime();
+        this.countId = 0;
         this.addedBy = _creator; //Count;
         this.source = src; //Memesource file.
         this.description = desc; //Meme description
@@ -103,19 +104,35 @@ const isAdmin = async (adminId) => {
 
 
 const pushMeme = (creator, source, desc_) => {
-    var newMeme = new Meme(creator, source, desc_);
+    mongoDB.memePoolSize().then((size) => {
+        var newMeme = new Meme(creator, source, desc_);
+        newMeme.countId = size;
 
-    //appData.memes.push(newMeme);
-    mongoDB.setMeme(newMeme);
+        //Setting meme.
+        mongoDB.setMeme(newMeme).then((result) => {
+            console.log("Object inserted ID:", result.insertedId);
+            if (result) {
+                dbLogs["Added meme"] = "Meme added!";
+                console.log("Meme added!");
+            }
+            else if(!result){
+                dbLogs["Added meme"] = "This error occured: " + err;
+                console.log("An error occurred.");
+            }
+        }).catch((error) => {
+            dbLogs["Added meme"] = "This error occured: " + error;
+            console.log("This error occured: ", error);
+        });
+    }).catch((err) => console.log("An error occured retreiving meme size"));
 }
 
-const popMeme = (index) => {
-    //return appData.memes[index];
-    return mongoDB.getMeme();
+const popMeme = async (index) => {
+    console.log("Getting meme");
+    return await mongoDB.getMeme(index);
 }
 
-const getMemePoolSize = () => {
-    return mongoDB.memePoolSize();
+const getMemePoolSize = async () => {
+    return await mongoDB.memePoolSize();
 }
 
 
